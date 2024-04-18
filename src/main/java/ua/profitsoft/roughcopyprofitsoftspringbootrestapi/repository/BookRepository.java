@@ -1,8 +1,8 @@
-package ua.profitsoft.rougcopyprofitsoftspringbotrestapi.repository;
+package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ua.profitsoft.rougcopyprofitsoftspringbotrestapi.model.Book;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 
 /**
  * Author: Viacheslav Korbut

@@ -1,4 +1,4 @@
-package ua.profitsoft.rougcopyprofitsoftspringbotrestapi.controller;
+package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.controller;
 
 /**
  * Author: Viacheslav Korbut

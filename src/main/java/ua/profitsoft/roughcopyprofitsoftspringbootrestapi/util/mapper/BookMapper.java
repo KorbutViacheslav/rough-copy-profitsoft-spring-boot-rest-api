@@ -1,4 +1,4 @@
-package ua.profitsoft.rougcopyprofitsoftspringbotrestapi.util.mapper;
+package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper;
 
 /**
  * Author: Viacheslav Korbut

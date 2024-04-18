@@ -1,4 +1,4 @@
-package ua.profitsoft.rougcopyprofitsoftspringbotrestapi.model;
+package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model;
 
 /**
  * Author: Viacheslav Korbut

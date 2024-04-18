@@ -1,6 +1,6 @@
-package ua.profitsoft.rougcopyprofitsoftspringbotrestapi.service;
+package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service;
 
-import ua.profitsoft.rougcopyprofitsoftspringbotrestapi.model.Book;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 
 import java.util.List;
 

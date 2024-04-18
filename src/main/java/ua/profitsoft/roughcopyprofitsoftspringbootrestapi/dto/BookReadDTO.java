@@ -1,4 +1,4 @@
-package ua.profitsoft.rougcopyprofitsoftspringbotrestapi.dto;
+package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto;
 
 /**
  * Author: Viacheslav Korbut
