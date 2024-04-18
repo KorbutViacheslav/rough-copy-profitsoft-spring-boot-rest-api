@@ -22,7 +22,7 @@ spring:
 
   #Liquibase properties
   liquibase:
-    enabled: true
+    enabled: false
     change-log: classpath:db/changelog/changelog.yml
     default-schema: liquibase
 
