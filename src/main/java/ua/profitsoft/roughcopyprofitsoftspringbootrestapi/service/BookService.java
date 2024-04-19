@@ -9,13 +9,13 @@ import java.util.List;
  * Date: 17.04.2024
  */
 public interface BookService {
-    Book createBook();
+    Book createBook(Book book);
 
     Book getBookById(Integer id);
 
-    Book updateBook();
+    Book updateBook(Book book);
 
-    boolean deleteBookById();
+    boolean deleteBookById(Integer id);
 
     List<Book> getAllBooks();
 }

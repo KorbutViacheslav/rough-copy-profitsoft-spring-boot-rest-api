@@ -2,7 +2,8 @@ package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Author: Viacheslav Korbut
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 public class Author {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String firstName;
@@ -19,5 +21,5 @@ public class Author {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
-    private List<Book> bookList;
+    private Set<Book> bookList = new HashSet<>();
 }

@@ -3,7 +3,9 @@ package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Author: Viacheslav Korbut
@@ -29,6 +31,6 @@ public class Book {
     private Integer yearPublished;
 
     @ElementCollection
-    private List<String> genres;
+    private Set<String> genres = new HashSet<>();
 
 }
