@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-authors-and-books
+      id: create_book_author_table
       author: Viacheslav Korbut
       changes:
         - createTable:
@@ -8,10 +8,11 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: bigint
+                  type: int
                   autoIncrement: true
                   constraints:
                     primaryKey: true
+                    nullable: false
               - column:
                   name: first_name
                   type: varchar(255)
@@ -24,38 +25,49 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: bigint
+                  type: int
                   autoIncrement: true
                   constraints:
                     primaryKey: true
+                    nullable: false
               - column:
                   name: title
                   type: varchar(255)
               - column:
                   name: author_id
-                  type: bigint
+                  type: int
+                  constraints:
+                    nullable: false
               - column:
                   name: year_published
-                  type: integer
+                  type: int
 
-  - changeSet:
-      id: add-genres-to-book
-      author: Viacheslav Korbut
-      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: author_id
+            baseTableName: book
+            constraintName: fk_book_author
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: author
+
         - createTable:
-            tableName: book_genre
+            tableName: book_genres
             columns:
               - column:
                   name: book_id
-                  type: bigint
+                  type: int
                   constraints:
-                    foreignKeyConstraint:
-                      baseColumnNames: book_id
-                      baseTableName: book
-                      referencedColumnNames: id
-                      referencedTableName: book
+                    nullable: false
               - column:
-                  name: genre
+                  name: genres
                   type: varchar(255)
-                  constraints:
-                    primaryKey: true
+
+        - addForeignKeyConstraint:
+            baseColumnNames: book_id
+            baseTableName: book_genres
+            constraintName: fk_book_genres_book
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: book

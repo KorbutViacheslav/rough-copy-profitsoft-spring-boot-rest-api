@@ -25,9 +25,9 @@ public class BookController {
 
     @GetMapping("/book/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BookReadDTO getBookById(@PathVariable Integer id) {
+    public Book getBookById(@PathVariable Integer id) {
         Book book = bookService.getBookById(id);
-        return bookMapper.toBookReadDTO(book);
+        return book;
     }
 
     @GetMapping("/books")
