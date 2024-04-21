@@ -1,4 +1,4 @@
-package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.imp;
+package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -6,7 +6,6 @@ import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.repository.BookRepository;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceNotFoundException;
-import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceWasDeletedException;
 
 import java.util.List;
 
