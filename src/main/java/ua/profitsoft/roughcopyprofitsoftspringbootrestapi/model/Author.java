@@ -27,6 +27,6 @@ public class Author {
     private String lastName;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
-    //@JsonIgnore // Ігнорує поле bookList під час серіалізації
+    @JsonIgnore // Ігнорує поле bookList під час серіалізації
     private Set<Book> bookList = new HashSet<>();
 }
