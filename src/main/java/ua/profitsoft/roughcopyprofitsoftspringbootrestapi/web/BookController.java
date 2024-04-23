@@ -1,4 +1,4 @@
-package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.controller;
+package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -32,7 +32,6 @@ public class BookController {
         return bookReadDTO;
     }
 
-
     @GetMapping("/book/{id}")
     @ResponseStatus(HttpStatus.OK)
     public BookReadDTO getBookById(@PathVariable Integer id) {
@@ -49,15 +48,8 @@ public class BookController {
     }
 
     @DeleteMapping("/book/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     public void deleteBookById(@PathVariable Integer id) {
         bookService.deleteBookById(id);
-    }
-
-    @GetMapping("/books")
-    @ResponseStatus(HttpStatus.OK)
-    public List<BookReadDTO> getAllBooks() {
-        List<Book> books = bookService.getAllBooks();
-        return bookMapper.toBookReadDTOList(books);
     }
 }
