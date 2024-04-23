@@ -10,8 +10,8 @@ import java.util.Date;
  */
 @Getter
 public class ErrorDetails {
-    private Date timestamp;
-    private String message, details;
+    private final Date timestamp;
+    private final String message, details;
 
     public ErrorDetails(Date timestamp, String message, String details) {
         super();

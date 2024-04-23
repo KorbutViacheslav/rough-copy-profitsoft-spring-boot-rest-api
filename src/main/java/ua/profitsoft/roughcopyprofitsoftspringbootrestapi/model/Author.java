@@ -1,6 +1,7 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,7 +27,7 @@ public class Author {
 
     private String lastName;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
-    @JsonIgnore // Ігнорує поле bookList під час серіалізації
+    @OneToMany(mappedBy = "author")
+    @JsonManagedReference
     private Set<Book> bookList = new HashSet<>();
 }
