@@ -17,6 +17,7 @@ public class AuthorReadDTO {
 
     @Pattern(regexp = "^[a-z]+$", message = "Invalid author name format")
     @Size(min = 2, max = 32, message = "Name must be between 2 and 32 characters long")
+    @NotNull
     public String firstName;
 
     @Pattern(regexp = "^[a-z]+$", message = "Invalid author lastname format")
@@ -24,5 +25,6 @@ public class AuthorReadDTO {
     @NotNull
     public String lastName;
 
+    @NotNull
     public Set<BookReadDTO> bookList = new HashSet<>();
 }

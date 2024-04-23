@@ -1,5 +1,6 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,11 +24,34 @@ public class BookController {
     private final BookService bookService;
     private final BookMapper bookMapper;
 
+    @PostMapping("/book")
+    @ResponseStatus(HttpStatus.CREATED)
+    public BookReadDTO createBook(@RequestBody @Valid BookReadDTO bookReadDTO) {
+        Book book = bookMapper.toBook(bookReadDTO);
+        bookService.createBook(book);
+        return bookReadDTO;
+    }
+
+
     @GetMapping("/book/{id}")
     @ResponseStatus(HttpStatus.OK)
     public BookReadDTO getBookById(@PathVariable Integer id) {
         Book book = bookService.getBookById(id);
         return bookMapper.toBookReadDTO(book);
+    }
+
+    @PatchMapping("/book/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public BookReadDTO updateBookById(@PathVariable Integer id, @RequestBody @Valid BookReadDTO bookReadDTO) {
+        bookService.getBookById(id);
+        Book book = bookMapper.toBook(bookReadDTO);
+        return bookMapper.toBookReadDTO(bookService.updateBook(book));
+    }
+
+    @DeleteMapping("/book/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBookById(@PathVariable Integer id) {
+        bookService.deleteBookById(id);
     }
 
     @GetMapping("/books")
