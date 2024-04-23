@@ -27,7 +27,7 @@ public class Author {
 
     private String lastName;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Book> bookList = new HashSet<>();
 }

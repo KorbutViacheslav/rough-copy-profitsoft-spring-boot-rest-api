@@ -1,5 +1,6 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.impl;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.repository.AuthorRepository;
@@ -13,6 +14,7 @@ import java.util.List;
  * Date: 20.04.2024
  */
 @Service
+@AllArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
 
     AuthorRepository authorRepository;

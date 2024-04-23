@@ -1,8 +1,6 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 
 import java.util.HashSet;
@@ -23,8 +21,8 @@ public class BookReadDTO {
     @NotNull
     public Author author;
 
-    @Pattern(regexp = "^[0-9]+$", message = "Invalid format. Only digits are allowed.")
-    @Size(min = 1, max = 4, message = "Year published must be between 1 and 4 digits long.")
+    @Digits(integer = 4, fraction = 0, message = "Invalid format. Only digits are allowed.")
+    @Positive(message = "Year published must be a positive number.")
     @NotNull
     public Integer yearPublished;
 
