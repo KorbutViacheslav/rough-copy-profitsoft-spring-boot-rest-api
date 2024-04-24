@@ -7,7 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.AuthorReadDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.AuthorService;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper.AuthorMapper;
 
 /**
@@ -21,13 +23,19 @@ public class AuthorController {
 
     private final AuthorService authorService;
     private final AuthorMapper authorMapper;
+    private final BookService bookService;
 
     @PostMapping("/author")
     @ResponseStatus(HttpStatus.CREATED)
     public AuthorReadDTO createAuthor(@RequestBody @Valid AuthorReadDTO authorReadDTO) {
         Author author = authorMapper.toAuthor(authorReadDTO);
-        authorService.createAuthor(author);
-        return authorReadDTO;
+
+        for (Book book : author.getBookList()) {
+            book.setAuthor(author);
+            bookService.createBook(book); // Зберегти книгу
+        }
+        Author a = authorService.createAuthor(author);
+        return authorMapper.toAuthorReadDTO(a);
     }
 
     @GetMapping("/author/{id}")

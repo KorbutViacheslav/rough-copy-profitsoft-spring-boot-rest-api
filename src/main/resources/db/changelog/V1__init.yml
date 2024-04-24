@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create_book_author_table
+      id: create_author_and_book_tables
       author: Viacheslav Korbut
       changes:
         - createTable:
@@ -12,7 +12,6 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    nullable: false
               - column:
                   name: first_name
                   type: varchar(255)
@@ -29,7 +28,6 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    nullable: false
               - column:
                   name: title
                   type: varchar(255)
@@ -46,10 +44,10 @@ databaseChangeLog:
             baseColumnNames: author_id
             baseTableName: book
             constraintName: fk_book_author
-            deferrable: false
-            initiallyDeferred: false
             referencedColumnNames: id
             referencedTableName: author
+            onDelete: CASCADE
+            onUpdate: CASCADE
 
         - createTable:
             tableName: book_genres
@@ -60,14 +58,14 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: genres
+                  name: genre
                   type: varchar(255)
 
         - addForeignKeyConstraint:
             baseColumnNames: book_id
             baseTableName: book_genres
             constraintName: fk_book_genres_book
-            deferrable: false
-            initiallyDeferred: false
             referencedColumnNames: id
             referencedTableName: book
+            onDelete: CASCADE
+            onUpdate: CASCADE

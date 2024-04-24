@@ -6,9 +6,7 @@ databaseChangeLog:
         - insert:
             tableName: author
             columns:
-              - column:
-                  name: id
-                  value: 1
+
               - column:
                   name: first_name
                   value: Harper
@@ -18,9 +16,7 @@ databaseChangeLog:
         - insert:
             tableName: author
             columns:
-              - column:
-                  name: id
-                  value: 2
+
               - column:
                   name: first_name
                   value: George
@@ -30,9 +26,7 @@ databaseChangeLog:
         - insert:
             tableName: author
             columns:
-              - column:
-                  name: id
-                  value: 3
+
               - column:
                   name: first_name
                   value: F. Scott
@@ -42,9 +36,7 @@ databaseChangeLog:
         - insert:
             tableName: author
             columns:
-              - column:
-                  name: id
-                  value: 4
+
               - column:
                   name: first_name
                   value: Jane
@@ -54,9 +46,7 @@ databaseChangeLog:
         - insert:
             tableName: author
             columns:
-              - column:
-                  name: id
-                  value: 5
+
               - column:
                   name: first_name
                   value: J.D.
@@ -66,9 +56,7 @@ databaseChangeLog:
         - insert:
             tableName: author
             columns:
-              - column:
-                  name: id
-                  value: 6
+
               - column:
                   name: first_name
                   value: J.R.R.
@@ -78,9 +66,7 @@ databaseChangeLog:
         - insert:
             tableName: author
             columns:
-              - column:
-                  name: id
-                  value: 7
+
               - column:
                   name: first_name
                   value: Suzanne
@@ -90,9 +76,7 @@ databaseChangeLog:
         - insert:
             tableName: author
             columns:
-              - column:
-                  name: id
-                  value: 8
+
               - column:
                   name: first_name
                   value: Dan
@@ -102,9 +86,7 @@ databaseChangeLog:
         - insert:
             tableName: author
             columns:
-              - column:
-                  name: id
-                  value: 9
+
               - column:
                   name: first_name
                   value: Paulo
@@ -115,9 +97,7 @@ databaseChangeLog:
         - insert:
             tableName: book
             columns:
-              - column:
-                  name: id
-                  value: 1
+
               - column:
                   name: title
                   value: To Kill a Mockingbird
@@ -149,9 +129,7 @@ databaseChangeLog:
         - insert:
             tableName: book
             columns:
-              - column:
-                  name: id
-                  value: 2
+
               - column:
                   name: title
                   value: 1984
@@ -183,9 +161,7 @@ databaseChangeLog:
         - insert:
             tableName: book
             columns:
-              - column:
-                  name: id
-                  value: 3
+
               - column:
                   name: title
                   value: The Great Gatsby
@@ -217,9 +193,7 @@ databaseChangeLog:
         - insert:
             tableName: book
             columns:
-              - column:
-                  name: id
-                  value: 4
+
               - column:
                   name: title
                   value: Pride and Prejudice
@@ -251,9 +225,7 @@ databaseChangeLog:
         - insert:
             tableName: book
             columns:
-              - column:
-                  name: id
-                  value: 5
+
               - column:
                   name: title
                   value: The Catcher in the Rye
@@ -285,9 +257,7 @@ databaseChangeLog:
         - insert:
             tableName: book
             columns:
-              - column:
-                  name: id
-                  value: 6
+
               - column:
                   name: title
                   value: The Lord of the Rings
@@ -319,9 +289,7 @@ databaseChangeLog:
         - insert:
             tableName: book
             columns:
-              - column:
-                  name: id
-                  value: 7
+
               - column:
                   name: title
                   value: The Hunger Games
@@ -353,9 +321,7 @@ databaseChangeLog:
         - insert:
             tableName: book
             columns:
-              - column:
-                  name: id
-                  value: 8
+
               - column:
                   name: title
                   value: The Da Vinci Code
@@ -387,9 +353,7 @@ databaseChangeLog:
         - insert:
             tableName: book
             columns:
-              - column:
-                  name: id
-                  value: 9
+
               - column:
                   name: title
                   value: The Hobbit
@@ -421,9 +385,7 @@ databaseChangeLog:
         - insert:
             tableName: book
             columns:
-              - column:
-                  name: id
-                  value: 10
+
               - column:
                   name: title
                   value: The Alchemist
