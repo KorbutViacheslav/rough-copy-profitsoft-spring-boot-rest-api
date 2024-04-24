@@ -10,4 +10,5 @@ import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
  */
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Integer> {
+    Author findByFirstNameAndLastName(String firstName, String lastName);
 }

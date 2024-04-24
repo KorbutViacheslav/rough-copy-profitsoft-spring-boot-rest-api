@@ -19,4 +19,5 @@ public interface AuthorService {
     boolean deleteAuthorById(Integer id);
 
     List<Author> getAllAuthor();
+    Author findByFirstNameAndLastName(String firstName, String lastName);
 }

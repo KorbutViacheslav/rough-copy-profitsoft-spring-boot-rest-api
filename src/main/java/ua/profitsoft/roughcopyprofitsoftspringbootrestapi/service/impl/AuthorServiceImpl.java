@@ -56,4 +56,9 @@ public class AuthorServiceImpl implements AuthorService {
     public List<Author> getAllAuthor() {
         return authorRepository.findAll();
     }
+
+    @Override
+    public Author findByFirstNameAndLastName(String firstName, String lastName) {
+        return authorRepository.findByFirstNameAndLastName(firstName,lastName);
+    }
 }
