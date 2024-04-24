@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.BookReadDTO;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.BookCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 
 import java.util.List;
@@ -22,4 +23,10 @@ public interface BookMapper {
     Book toBook(BookReadDTO bookReadDTO);
 
     List<BookReadDTO> toBookReadDTOList(List<Book> books);
+
+
+    BookCreateDTO toBookCreateDTO(Book book);
+
+    @Mapping(target = "id", ignore = true)
+    Book toBook(BookCreateDTO bookCreateDTO);
 }

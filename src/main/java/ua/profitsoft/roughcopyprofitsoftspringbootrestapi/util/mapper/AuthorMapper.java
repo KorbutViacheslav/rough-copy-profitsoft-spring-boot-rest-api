@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.AuthorReadDTO;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.AuthorCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 
 /**
@@ -18,4 +19,10 @@ public interface AuthorMapper {
 
     @Mapping(target = "bookList", ignore = true)
     Author toAuthor(AuthorReadDTO authorReadDTO);
+
+
+    AuthorCreateDTO toAuthorCreateDTO(Author author);
+
+    @Mapping(target = "id", ignore = true)
+    Author toAuthor(AuthorCreateDTO authorCreateDTO);
 }
