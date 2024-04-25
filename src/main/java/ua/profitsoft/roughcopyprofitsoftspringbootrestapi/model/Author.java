@@ -12,9 +12,7 @@ import java.util.Set;
  * Author: Viacheslav Korbut
  * Date: 17.04.2024
  */
-@Getter
-@Setter
-@ToString
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
