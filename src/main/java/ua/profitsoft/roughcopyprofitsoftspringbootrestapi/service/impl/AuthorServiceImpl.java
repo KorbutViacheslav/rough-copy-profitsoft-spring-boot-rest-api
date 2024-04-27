@@ -2,6 +2,7 @@ package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.repository.AuthorRepository;
@@ -65,5 +66,10 @@ public class AuthorServiceImpl implements AuthorService {
     public Author findByFirstNameAndLastName(String firstName, String lastName) {
         return authorRepository.findByFirstNameAndLastName(firstName, lastName)
                 .orElseThrow(ResourceNotFoundException::new);
+    }
+
+    @Override
+    public Page<Author> findAllAuthor() {
+        return null;
     }
 }

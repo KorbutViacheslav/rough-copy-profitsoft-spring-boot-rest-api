@@ -1,5 +1,6 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service;
 
+import org.springframework.data.domain.Page;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface AuthorService {
     List<Author> getAllAuthor();
 
     Author findByFirstNameAndLastName(String firstName, String lastName);
+
+    Page<Author> findAllAuthor();
 }

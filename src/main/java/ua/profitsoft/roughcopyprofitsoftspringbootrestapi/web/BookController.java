@@ -3,6 +3,8 @@ package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,10 @@ import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceIsExistException;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper.AuthorMapper;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper.BookMapper;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.filter.BookFilterRequest;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Author: Viacheslav Korbut
@@ -62,7 +68,7 @@ public class BookController {
     @Operation(summary = "Update book by ID", description = "Update a book from the database by its unique ID.")
     public BookReadDTO updateBookById(@PathVariable Integer id, @RequestBody @Valid BookCreateDTO bookCreateDTO) {
         Book b = bookMapper.toBook(bookCreateDTO);
-        Book bo = bookService.updateBook(id,b);
+        Book bo = bookService.updateBook(id, b);
 
         return bookMapper.toBookReadDTO(bo);
     }
@@ -74,5 +80,17 @@ public class BookController {
         bookService.deleteBookById(id);
     }
 
-    @GetMapping()
+    @PostMapping("/page")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<BookCreateDTO> getPageWithBooks(@RequestBody BookFilterRequest request) {
+        Page<Book> bookPage = bookService.findAllBooks(
+                request.getTitle(),
+                request.getYearPublish(),
+                request.getPage(),
+                request.getSize());
+         List<BookCreateDTO> bookCreateDTOList = bookPage.getContent().stream()
+                 .map(bookMapper::toBookCreateDTO)
+                 .collect(Collectors.toList());
+         return new PageImpl<>(bookCreateDTOList, bookPage.getPageable(), bookPage.getTotalElements());
+    }
 }

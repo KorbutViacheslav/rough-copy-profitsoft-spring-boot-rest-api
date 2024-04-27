@@ -2,6 +2,10 @@ package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
@@ -10,7 +14,9 @@ import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceIsExistException;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceNotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
+import jakarta.persistence.criteria.Predicate;
 
 /**
  * Author: Viacheslav Korbut
@@ -66,5 +72,22 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
+    }
+
+    @Override
+    public Page<Book> findAllBooks(String title, Integer yearPublish, Integer page, Integer size) {
+        Specification<Book> specification = (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if (title != null && !title.isEmpty()) {
+                predicates.add(criteriaBuilder.equal(root.get("title"), title));
+            }
+            if (yearPublish != null) {
+                predicates.add(criteriaBuilder.equal(root.get("yearPublished"), yearPublish));
+            }
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+
+        Pageable pageable = PageRequest.of(page, size);
+        return bookRepository.findAll(specification, pageable);
     }
 }

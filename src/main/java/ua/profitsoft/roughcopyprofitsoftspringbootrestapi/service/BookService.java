@@ -1,5 +1,6 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service;
 
+import org.springframework.data.domain.Page;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface BookService {
     boolean deleteBookById(Integer id);
 
     List<Book> getAllBooks();
+
+    Page<Book> findAllBooks(String title, Integer yearPublish,Integer page, Integer size);
 }
