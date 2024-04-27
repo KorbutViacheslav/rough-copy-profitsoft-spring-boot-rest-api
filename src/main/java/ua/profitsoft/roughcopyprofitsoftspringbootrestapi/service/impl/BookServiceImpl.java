@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Optional;
 
 import jakarta.persistence.criteria.Predicate;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.filter.BookFilterRequest;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.filter.BookSpecification;
 
 /**
  * Author: Viacheslav Korbut
@@ -103,4 +105,12 @@ public class BookServiceImpl implements BookService {
         Pageable pageable = PageRequest.of(page, size);
         return bookRepository.findAll(specification, pageable);
     }
+
+    @Override
+    public Page<Book> findAllBooks(BookFilterRequest bookFilterRequest) {
+        Specification<Book> specification = new BookSpecification(bookFilterRequest);
+        Pageable pageable = PageRequest.of(bookFilterRequest.getPage(), bookFilterRequest.getSize());
+        return bookRepository.findAll(specification, pageable);
+    }
+
 }

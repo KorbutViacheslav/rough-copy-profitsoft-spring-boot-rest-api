@@ -1,4 +1,4 @@
-package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web;
+package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -88,9 +88,20 @@ public class BookController {
                 request.getYearPublish(),
                 request.getPage(),
                 request.getSize());
-         List<BookCreateDTO> bookCreateDTOList = bookPage.getContent().stream()
-                 .map(bookMapper::toBookCreateDTO)
-                 .collect(Collectors.toList());
-         return new PageImpl<>(bookCreateDTOList, bookPage.getPageable(), bookPage.getTotalElements());
+        List<BookCreateDTO> bookCreateDTOList = bookPage.getContent().stream()
+                .map(bookMapper::toBookCreateDTO)
+                .collect(Collectors.toList());
+        return new PageImpl<>(bookCreateDTOList, bookPage.getPageable(), bookPage.getTotalElements());
+    }
+
+    @PostMapping("/pageable")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get page books by filters", description = "Get page books by filters: title, year publish, author name, author last name. Get page and size. You make choose one or many filters.")
+    public Page<BookCreateDTO> page(@RequestBody BookFilterRequest request) {
+        Page<Book> bookPage = bookService.findAllBooks(request);
+        List<BookCreateDTO> bookCreateDTOList = bookPage.getContent().stream()
+                .map(bookMapper::toBookCreateDTO)
+                .toList();
+        return new PageImpl<>(bookCreateDTOList, bookPage.getPageable(), bookPage.getTotalElements());
     }
 }
