@@ -1,5 +1,6 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,7 @@ public class BookController {
 
     @PostMapping("/book")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create new book", description = "Create new book to database.")
     public BookReadDTO createBook(@RequestBody @Valid BookCreateDTO bookCreateDTO) {
         Author author = authorMapper.toAuthor(bookCreateDTO.getAuthor());
         Book book = bookMapper.toBook(bookCreateDTO);
@@ -50,6 +52,7 @@ public class BookController {
 
     @GetMapping("/book/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get book by ID", description = "Get a book from the database by its unique ID.")
     public BookReadDTO getBookById(@PathVariable Integer id) {
         Book book = bookService.getBookById(id);
         return bookMapper.toBookReadDTO(book);
@@ -57,6 +60,7 @@ public class BookController {
 
     @PatchMapping("/book/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Update book by ID", description = "Update a book from the database by its unique ID.")
     public BookReadDTO updateBookById(@PathVariable Integer id, @RequestBody @Valid BookCreateDTO bookCreateDTO) {
         Book b = bookMapper.toBook(bookCreateDTO);
         Book bo = bookService.updateBook(id,b);
@@ -66,6 +70,7 @@ public class BookController {
 
     @DeleteMapping("/book/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Delete book by ID", description = "Delete a book from the database by its unique ID.")
     public void deleteBookById(@PathVariable Integer id) {
         bookService.deleteBookById(id);
     }

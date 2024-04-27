@@ -1,5 +1,6 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -16,11 +17,13 @@ public class AuthorCreateDTO {
     @Pattern(regexp = "^[A-Z][a-zA-Z.]+$", message = "Invalid author name format")
     @Size(min = 2, max = 32, message = "Name must be between 2 and 32 characters long")
     @NotNull
+    @Schema(description = "Author name", example = "Stephen")
     public String firstName;
 
 
     @Pattern(regexp = "^[A-Z][a-zA-Z.]+$", message = "Invalid author lastname format")
     @Size(min = 2, max = 32, message = "Name must be between 2 and 32 characters long")
     @NotNull
+    @Schema(description = "Author lastname", example = "King")
     public String lastName;
 }
