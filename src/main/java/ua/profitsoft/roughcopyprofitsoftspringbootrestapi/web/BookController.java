@@ -6,9 +6,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read.BookReadDTO;
-import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.AuthorCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.BookCreateDTO;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read.BookReadDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.AuthorService;
@@ -74,4 +73,6 @@ public class BookController {
     public void deleteBookById(@PathVariable Integer id) {
         bookService.deleteBookById(id);
     }
+
+    @GetMapping()
 }
