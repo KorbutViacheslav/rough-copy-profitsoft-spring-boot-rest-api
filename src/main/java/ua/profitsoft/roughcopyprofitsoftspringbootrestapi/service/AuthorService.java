@@ -3,6 +3,7 @@ package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Author: Viacheslav Korbut
@@ -19,5 +20,6 @@ public interface AuthorService {
     boolean deleteAuthorById(Integer id);
 
     List<Author> getAllAuthor();
+
     Author findByFirstNameAndLastName(String firstName, String lastName);
 }

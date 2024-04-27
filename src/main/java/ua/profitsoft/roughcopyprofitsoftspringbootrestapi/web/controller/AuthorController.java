@@ -5,12 +5,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.AuthorReadDTO;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.AuthorCreateDTO;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read.AuthorReadDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.AuthorService;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceIsExistException;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper.AuthorMapper;
+
+import java.util.Optional;
 
 /**
  * Author: Viacheslav Korbut
@@ -27,15 +31,10 @@ public class AuthorController {
 
     @PostMapping("/author")
     @ResponseStatus(HttpStatus.CREATED)
-    public AuthorReadDTO createAuthor(@RequestBody @Valid AuthorReadDTO authorReadDTO) {
-        Author author = authorMapper.toAuthor(authorReadDTO);
-
-        for (Book book : author.getBookList()) {
-            book.setAuthor(author);
-            bookService.createBook(book); // Зберегти книгу
-        }
-        Author a = authorService.createAuthor(author);
-        return authorMapper.toAuthorReadDTO(a);
+    public AuthorReadDTO createAuthor(@RequestBody @Valid AuthorCreateDTO authorCreateDTO) {
+        Author author = authorMapper.toAuthor(authorCreateDTO);
+        authorService.createAuthor(author);
+        return authorMapper.toAuthorReadDTO(author);
     }
 
     @GetMapping("/author/{id}")

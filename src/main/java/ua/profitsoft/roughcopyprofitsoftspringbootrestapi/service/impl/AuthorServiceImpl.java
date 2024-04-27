@@ -1,13 +1,16 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.repository.AuthorRepository;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.AuthorService;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceIsExistException;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Author: Viacheslav Korbut
@@ -21,12 +24,17 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author createAuthor(Author author) {
-        return authorRepository.save(author);
+        try {
+            return authorRepository.save(author);
+        } catch (DataIntegrityViolationException ex) {
+            throw new ResourceIsExistException();
+        }
     }
 
     @Override
     public Author getAuthorById(Integer id) {
-        return authorRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        return authorRepository.findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
@@ -59,6 +67,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author findByFirstNameAndLastName(String firstName, String lastName) {
-        return authorRepository.findByFirstNameAndLastName(firstName,lastName);
+        return authorRepository.findByFirstNameAndLastName(firstName, lastName)
+                .orElseThrow(ResourceNotFoundException::new);
     }
 }

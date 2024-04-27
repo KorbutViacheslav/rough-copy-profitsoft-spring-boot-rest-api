@@ -1,8 +1,9 @@
-package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto;
+package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.BookCreateDTO;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,5 +27,5 @@ public class AuthorReadDTO {
     public String lastName;
 
 
-    public Set<BookReadDTO> bookList = new HashSet<>();
+    public Set<BookCreateDTO> bookList = new HashSet<>();
 }

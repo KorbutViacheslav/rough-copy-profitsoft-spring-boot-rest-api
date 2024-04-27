@@ -17,6 +17,9 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "book", indexes = {@Index(
+        name = "unique_book_title_year",
+        columnList = "title, yearPublished", unique = true)})
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

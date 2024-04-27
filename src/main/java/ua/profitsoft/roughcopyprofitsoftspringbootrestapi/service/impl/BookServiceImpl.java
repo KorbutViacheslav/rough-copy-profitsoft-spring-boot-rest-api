@@ -1,10 +1,12 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.repository.BookRepository;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceIsExistException;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceNotFoundException;
 
 import java.util.List;
@@ -21,7 +23,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book createBook(Book book) {
-        return bookRepository.save(book);
+        try {
+            return bookRepository.save(book);
+        } catch (DataIntegrityViolationException ex) {
+            throw new ResourceIsExistException();
+        }
     }
 
     @Override

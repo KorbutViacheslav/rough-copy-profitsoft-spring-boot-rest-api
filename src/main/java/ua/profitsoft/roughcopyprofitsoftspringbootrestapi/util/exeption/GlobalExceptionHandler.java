@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceIsExistException;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceNotFoundException;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceWasDeletedException;
 
@@ -16,13 +17,14 @@ import java.util.Date;
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    private final static String BOOK_NOT_FOUND = "Book not found with id = ";
-    private final static String BOOK_WAS_DELETED = "Book was deleted with id = ";
+    private final static String ENTITY_NOT_FOUND = "Entity not found with id = ";
+    private final static String ENTITY_WAS_DELETED = "Entity was deleted with id = ";
+    private final static String ENTITY_IS_EXIST = "Such an entity already exists in the database";
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> resourceNotFoundException(WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(),
-                BOOK_NOT_FOUND + getIdFromWebRequest(request),
+                ENTITY_NOT_FOUND + getIdFromWebRequest(request),
                 request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
@@ -30,9 +32,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceWasDeletedException.class)
     public ResponseEntity<?> resourceWasDeletedException(WebRequest request) {
         ErrorDetails errorDetails = new ErrorDetails(new Date(),
-                BOOK_WAS_DELETED + getIdFromWebRequest(request),
+                ENTITY_WAS_DELETED + getIdFromWebRequest(request),
                 request.getDescription(false));
         return new ResponseEntity<>(errorDetails, HttpStatus.GONE);
+    }
+    @ExceptionHandler(ResourceIsExistException.class)
+    public ResponseEntity<?> resourceIsExistException(WebRequest request){
+        ErrorDetails errorDetails = new ErrorDetails(new Date(),ENTITY_IS_EXIST,request.getDescription(false));
+        return new ResponseEntity<>(errorDetails,HttpStatus.CONFLICT);
     }
 
     private static String getIdFromWebRequest(WebRequest request) {

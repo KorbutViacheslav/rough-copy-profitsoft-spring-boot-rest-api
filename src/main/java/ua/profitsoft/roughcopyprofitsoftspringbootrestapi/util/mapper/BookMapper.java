@@ -3,7 +3,7 @@ package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.BookReadDTO;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read.BookReadDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.BookCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 

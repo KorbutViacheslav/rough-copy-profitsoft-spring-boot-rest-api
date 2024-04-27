@@ -3,7 +3,7 @@ package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.AuthorReadDTO;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read.AuthorReadDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.AuthorCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 
@@ -20,9 +20,13 @@ public interface AuthorMapper {
     @Mapping(target = "bookList", ignore = true)
     Author toAuthor(AuthorReadDTO authorReadDTO);
 
-
     AuthorCreateDTO toAuthorCreateDTO(Author author);
 
     @Mapping(target = "id", ignore = true)
     Author toAuthor(AuthorCreateDTO authorCreateDTO);
+
+    @Mapping(target = "id", ignore = true)
+    AuthorReadDTO toAuthorReadDTO(AuthorCreateDTO authorCreateDTO);
+
+    AuthorCreateDTO toAuthorCreateDTO(AuthorReadDTO authorReadDTO);
 }

@@ -1,6 +1,7 @@
-package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto;
+package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read;
 
 import jakarta.validation.constraints.*;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.AuthorCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 
 import java.util.HashSet;
@@ -19,7 +20,7 @@ public class BookReadDTO {
     public String title;
 
     @NotNull
-    public Author author;
+    public AuthorCreateDTO authorCreateDTO;
 
     @Digits(integer = 4, fraction = 0, message = "Invalid format. Only digits are allowed.")
     @Positive(message = "Year published must be a positive number.")

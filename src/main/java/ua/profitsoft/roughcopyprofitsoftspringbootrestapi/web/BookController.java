@@ -5,17 +5,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.BookReadDTO;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read.BookReadDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.AuthorCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.BookCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.AuthorService;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceIsExistException;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper.AuthorMapper;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper.BookMapper;
-
-import java.util.List;
 
 /**
  * Author: Viacheslav Korbut
@@ -34,23 +33,18 @@ public class BookController {
     @PostMapping("/book")
     @ResponseStatus(HttpStatus.CREATED)
     public BookReadDTO createBook(@RequestBody @Valid BookCreateDTO bookCreateDTO) {
-        Author author;
-        AuthorCreateDTO authorCreateDTO = bookCreateDTO.getAuthor();
-
-        author = authorService.findByFirstNameAndLastName(
-                authorCreateDTO.getFirstName(),
-                authorCreateDTO.getLastName()
-        );
-
-        if (author == null) {
-            author = authorMapper.toAuthor(authorCreateDTO);
-            authorService.createAuthor(author);
-        }
-
+        Author author = authorMapper.toAuthor(bookCreateDTO.getAuthor());
         Book book = bookMapper.toBook(bookCreateDTO);
+
+        try {
+            authorService.createAuthor(author);
+        } catch (ResourceIsExistException ex) {
+            author = authorService.findByFirstNameAndLastName(
+                    bookCreateDTO.getAuthor().getFirstName(),
+                    bookCreateDTO.getAuthor().getLastName());
+        }
         book.setAuthor(author);
         bookService.createBook(book);
-
         return bookMapper.toBookReadDTO(book);
     }
 
