@@ -7,6 +7,8 @@ import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read.AuthorReadDTO
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.AuthorCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 
+import java.util.List;
+
 /**
  * Author: Viacheslav Korbut
  * Date: 23.04.2024
@@ -29,4 +31,6 @@ public interface AuthorMapper {
     AuthorReadDTO toAuthorReadDTO(AuthorCreateDTO authorCreateDTO);
 
     AuthorCreateDTO toAuthorCreateDTO(AuthorReadDTO authorReadDTO);
+
+    List<AuthorCreateDTO> toListAuthorCreateDTO(List<Author> authorList);
 }

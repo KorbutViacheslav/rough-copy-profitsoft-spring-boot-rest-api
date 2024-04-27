@@ -15,7 +15,7 @@ public interface AuthorService {
 
     Author getAuthorById(Integer id);
 
-    Author updateAuthor(Author author);
+    Author updateAuthor(Integer id, Author author);
 
     boolean deleteAuthorById(Integer id);
 

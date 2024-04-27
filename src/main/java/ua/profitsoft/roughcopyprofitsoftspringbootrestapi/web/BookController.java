@@ -57,10 +57,11 @@ public class BookController {
 
     @PatchMapping("/book/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BookReadDTO updateBookById(@PathVariable Integer id, @RequestBody @Valid BookReadDTO bookReadDTO) {
-        bookService.getBookById(id);
-        Book book = bookMapper.toBook(bookReadDTO);
-        return bookMapper.toBookReadDTO(bookService.updateBook(book));
+    public BookReadDTO updateBookById(@PathVariable Integer id, @RequestBody @Valid BookCreateDTO bookCreateDTO) {
+        Book b = bookMapper.toBook(bookCreateDTO);
+        Book bo = bookService.updateBook(id,b);
+
+        return bookMapper.toBookReadDTO(bo);
     }
 
     @DeleteMapping("/book/{id}")

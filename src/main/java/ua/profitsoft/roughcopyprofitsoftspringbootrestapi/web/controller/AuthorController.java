@@ -14,6 +14,7 @@ import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceIsExistException;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper.AuthorMapper;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -46,15 +47,21 @@ public class AuthorController {
 
     @PatchMapping("/author/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AuthorReadDTO updateAuthorById(@PathVariable Integer id, @RequestBody @Valid AuthorReadDTO authorReadDTO) {
-        authorService.getAuthorById(id);
-        Author author = authorMapper.toAuthor(authorReadDTO);
-        return authorMapper.toAuthorReadDTO(authorService.updateAuthor(author));
+    public AuthorReadDTO updateAuthorById(@PathVariable Integer id, @RequestBody @Valid AuthorCreateDTO authorCreateDTO) {
+        Author author = authorMapper.toAuthor(authorCreateDTO);
+        return authorMapper.toAuthorReadDTO(authorService.updateAuthor(id, author));
     }
 
     @DeleteMapping("/author/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteAuthorById(@PathVariable Integer id) {
         authorService.deleteAuthorById(id);
+    }
+
+    @GetMapping("/authors")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AuthorCreateDTO> getAllAuthors() {
+
+        return authorMapper.toListAuthorCreateDTO(authorService.getAllAuthor());
     }
 }

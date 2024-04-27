@@ -3,6 +3,7 @@ package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.repository.BookRepository;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
@@ -37,16 +38,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book updateBook(Book book) {
-        return bookRepository.findById(book.getId())
-                .map(entity -> {
-                    entity.setAuthor(book.getAuthor());
-                    entity.setTitle(book.getTitle());
-                    entity.setYearPublished(book.getYearPublished());
-                    entity.setGenres(book.getGenres());
-                    return bookRepository.save(entity);
-                })
-                .orElseThrow(ResourceNotFoundException::new);
+    public Book updateBook(Integer id, Book book) {
+        Book existingBook = getBookById(id);
+
+        Author existingAuthor = existingBook.getAuthor();
+        Author updatedAuthor = book.getAuthor();
+
+        if (updatedAuthor != null && !updatedAuthor.equals(existingAuthor)) {
+            existingBook.setAuthor(updatedAuthor);
+        }
+        existingBook.setTitle(book.getTitle());
+        existingBook.setYearPublished(book.getYearPublished());
+        existingBook.setGenres(book.getGenres());
+        return bookRepository.save(existingBook);
     }
 
     @Override

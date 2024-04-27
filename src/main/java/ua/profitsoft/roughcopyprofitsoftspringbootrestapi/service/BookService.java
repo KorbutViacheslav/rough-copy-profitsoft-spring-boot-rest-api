@@ -13,7 +13,7 @@ public interface BookService {
 
     Book getBookById(Integer id);
 
-    Book updateBook(Book book);
+    Book updateBook(Integer id, Book book);
 
     boolean deleteBookById(Integer id);
 

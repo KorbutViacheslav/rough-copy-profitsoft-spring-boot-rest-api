@@ -38,15 +38,11 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author updateAuthor(Author author) {
-        return authorRepository.findById(author.getId())
-                .map(entity -> {
-                    entity.setFirstName(author.getFirstName());
-                    entity.setLastName(author.getLastName());
-                    entity.setBookList(author.getBookList());
-                    return authorRepository.save(entity);
-                })
-                .orElseThrow(ResourceNotFoundException::new);
+    public Author updateAuthor(Integer id, Author author) {
+        Author a = getAuthorById(id);
+        a.setFirstName(author.getFirstName());
+        a.setLastName(author.getLastName());
+        return authorRepository.save(a);
     }
 
     @Override
