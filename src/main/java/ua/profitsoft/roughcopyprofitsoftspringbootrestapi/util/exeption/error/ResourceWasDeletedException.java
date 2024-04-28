@@ -1,4 +1,4 @@
-package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book;
+package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.error;
 
 /**
  * Author: Viacheslav Korbut

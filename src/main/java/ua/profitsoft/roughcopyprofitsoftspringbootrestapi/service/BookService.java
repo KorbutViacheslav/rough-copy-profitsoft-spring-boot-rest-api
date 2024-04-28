@@ -19,8 +19,8 @@ public interface BookService {
 
     boolean deleteBookById(Integer id);
 
-    List<Book> getAllBooks();
+    //List<Book> getAllBooks();
 
-    Page<Book> findAllBooks(String title, Integer yearPublish,Integer page, Integer size);
+    //Page<Book> findAllBooks(String title, Integer yearPublish,Integer page, Integer size);
     Page<Book> findAllBooks(BookFilterRequest bookFilterRequest);
 }

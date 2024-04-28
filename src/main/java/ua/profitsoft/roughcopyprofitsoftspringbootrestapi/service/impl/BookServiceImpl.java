@@ -1,6 +1,5 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.impl;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -13,8 +12,8 @@ import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.repository.AuthorRepository;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.repository.BookRepository;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
-import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceIsExistException;
-import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceNotFoundException;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.error.ResourceIsExistException;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.error.ResourceNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +83,7 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    @Override
+/*    @Override
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
@@ -104,7 +103,7 @@ public class BookServiceImpl implements BookService {
 
         Pageable pageable = PageRequest.of(page, size);
         return bookRepository.findAll(specification, pageable);
-    }
+    }*/
 
     @Override
     public Page<Book> findAllBooks(BookFilterRequest bookFilterRequest) {

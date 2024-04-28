@@ -3,10 +3,14 @@ package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.BookCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read.BookReadDTO;
@@ -14,13 +18,13 @@ import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.AuthorService;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
-import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.book.ResourceIsExistException;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.error.ResourceIsExistException;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper.AuthorMapper;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper.BookMapper;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.filter.BookFilterRequest;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.writer.CSVReportGenerator;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Author: Viacheslav Korbut
@@ -80,7 +84,7 @@ public class BookController {
         bookService.deleteBookById(id);
     }
 
-    @PostMapping("/page")
+/*    @PostMapping("/page")
     @ResponseStatus(HttpStatus.OK)
     public Page<BookCreateDTO> getPageWithBooks(@RequestBody BookFilterRequest request) {
         Page<Book> bookPage = bookService.findAllBooks(
@@ -92,7 +96,7 @@ public class BookController {
                 .map(bookMapper::toBookCreateDTO)
                 .collect(Collectors.toList());
         return new PageImpl<>(bookCreateDTOList, bookPage.getPageable(), bookPage.getTotalElements());
-    }
+    }*/
 
     @PostMapping("/pageable")
     @ResponseStatus(HttpStatus.OK)
@@ -104,4 +108,25 @@ public class BookController {
                 .toList();
         return new PageImpl<>(bookCreateDTOList, bookPage.getPageable(), bookPage.getTotalElements());
     }
+
+    @PostMapping("/_report")
+    @Operation(summary = "Generate report for books", description = "Generate report in Excel or CSV format for books based on given filters")
+    public ResponseEntity<Resource> generateReport(@RequestBody BookFilterRequest request) {
+        List<BookCreateDTO> bookCreateDTOList = bookService.findAllBooks(request).getContent().stream()
+                .map(bookMapper::toBookCreateDTO)
+                .toList();
+
+        CSVReportGenerator csvReportGenerator = new CSVReportGenerator();
+        ByteArrayResource resource = csvReportGenerator.generateCSVReport(bookCreateDTOList);
+
+        if (resource != null) {
+            String fileName = "books_report.csv";
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                    .body(resource);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }
