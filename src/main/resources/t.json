@@ -1,0 +1,41 @@
+[
+{
+"title": "New",
+"yearPublished": 1998,
+"author": {
+"firstName": "Stephen",
+"lastName": "King"
+},
+"genres": [
+"Horror",
+"Thriller",
+"Dark fantasy"
+]
+},
+  {
+    "title": "It",
+    "yearPublished": 1986,
+    "author": {
+      "firstName": "Stephen",
+      "lastName": "King"
+    },
+    "genres": [
+      "Horror",
+      "Thriller",
+      "Dark fantasy"
+    ]
+  },
+  {
+    "title": "",
+    "yearPublished": 1986,
+    "author": {
+      "firstName": "S",
+      "lastName": "K"
+    },
+    "genres": [
+      "Horror",
+      "Thriller",
+      "Dark fantasy"
+    ]
+  }
+]

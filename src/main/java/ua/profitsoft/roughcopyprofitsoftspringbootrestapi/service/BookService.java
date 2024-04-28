@@ -1,10 +1,12 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service;
 
 import org.springframework.data.domain.Page;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.BookCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.filter.BookFilterRequest;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: Viacheslav Korbut
@@ -23,4 +25,6 @@ public interface BookService {
 
     //Page<Book> findAllBooks(String title, Integer yearPublish,Integer page, Integer size);
     Page<Book> findAllBooks(BookFilterRequest bookFilterRequest);
+
+    Map<String, Object> uploadBooks(List<BookCreateDTO> bookCreateDTOs);
 }

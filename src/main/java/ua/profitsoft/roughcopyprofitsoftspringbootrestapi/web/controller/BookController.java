@@ -1,5 +1,7 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.BookCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read.BookReadDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
@@ -24,7 +27,9 @@ import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper.BookMapper
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.filter.BookFilterRequest;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.writer.CSVReportGenerator;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: Viacheslav Korbut
@@ -127,6 +132,28 @@ public class BookController {
         } else {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PostMapping(value = "/book/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Upload books from JSON file", description = "Upload books from JSON file and save valid entries to the database.")
+    public ResponseEntity<Map<String, Object>> uploadBooks(@RequestPart("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "File is empty"));
+        }
+
+        try {
+            List<BookCreateDTO> bookCreateDTOs = parseJsonFile(file);
+            Map<String, Object> response = bookService.uploadBooks(bookCreateDTOs);
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Failed to read file"));
+        }
+    }
+
+    private List<BookCreateDTO> parseJsonFile(MultipartFile file) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        TypeReference<List<BookCreateDTO>> typeRef = new TypeReference<>() {};
+        return objectMapper.readValue(file.getInputStream(), typeRef);
     }
 
 }
