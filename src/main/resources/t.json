@@ -37,5 +37,18 @@
       "Thriller",
       "Dark fantasy"
     ]
+  },
+  {
+    "title": "Hand",
+    "yearPublished": 2002,
+    "author": {
+      "firstName": "Stephen",
+      "lastName": "King"
+    },
+    "genres": [
+      "Roman",
+      "Thriller",
+      "Dark fantasy"
+    ]
   }
 ]
