@@ -9,6 +9,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -16,7 +18,12 @@ import java.util.List;
  * Date: 28.04.2024
  */
 public class CSVReportGenerator {
-    public ByteArrayResource generateCSVReport(List<BookCreateDTO> bookCreateDTOs) {
+
+    private CSVReportGenerator() {
+
+    }
+
+    public static ByteArrayResource generateCSVReport(List<BookCreateDTO> bookCreateDTOs) {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
              OutputStreamWriter writer = new OutputStreamWriter(baos, StandardCharsets.UTF_8)) {
 
@@ -44,5 +51,12 @@ public class CSVReportGenerator {
         } catch (IOException e) {
             throw new CSVGenerationException();
         }
+    }
+
+    public static String generateFileName() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+        String formattedDateTime = now.format(formatter);
+        return "books_report_" + formattedDateTime + ".csv";
     }
 }

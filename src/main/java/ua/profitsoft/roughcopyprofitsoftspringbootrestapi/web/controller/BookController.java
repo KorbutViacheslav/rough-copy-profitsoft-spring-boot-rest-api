@@ -76,7 +76,6 @@ public class BookController {
     public BookReadDTO updateBookById(@PathVariable Integer id, @RequestBody @Valid BookCreateDTO bookCreateDTO) {
         Book b = bookMapper.toBook(bookCreateDTO);
         Book bo = bookService.updateBook(id, b);
-
         return bookMapper.toBookReadDTO(bo);
     }
 
@@ -87,49 +86,23 @@ public class BookController {
         bookService.deleteBookById(id);
     }
 
-/*    @PostMapping("/page")
-    @ResponseStatus(HttpStatus.OK)
-    public Page<BookCreateDTO> getPageWithBooks(@RequestBody BookFilterRequest request) {
-        Page<Book> bookPage = bookService.findAllBooks(
-                request.getTitle(),
-                request.getYearPublish(),
-                request.getPage(),
-                request.getSize());
-        List<BookCreateDTO> bookCreateDTOList = bookPage.getContent().stream()
-                .map(bookMapper::toBookCreateDTO)
-                .collect(Collectors.toList());
-        return new PageImpl<>(bookCreateDTOList, bookPage.getPageable(), bookPage.getTotalElements());
-    }*/
-
     @PostMapping("/pageable")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get page books by filters", description = "Get page books by filters: title, year publish, author name, author last name. Get page and size. You make choose one or many filters.")
     public Page<BookCreateDTO> page(@RequestBody BookFilterRequest request) {
-        Page<Book> bookPage = bookService.findAllBooks(request);
-        List<BookCreateDTO> bookCreateDTOList = bookPage.getContent().stream()
-                .map(bookMapper::toBookCreateDTO)
-                .toList();
-        return new PageImpl<>(bookCreateDTOList, bookPage.getPageable(), bookPage.getTotalElements());
+        return bookService.findAllBooks(request);
     }
 
     @PostMapping("/_report")
     @Operation(summary = "Generate report for books", description = "Generate report in Excel or CSV format for books based on given filters")
     public ResponseEntity<Resource> generateReport(@RequestBody BookFilterRequest request) {
-        List<BookCreateDTO> bookCreateDTOList = bookService.findAllBooks(request).getContent().stream()
-                .map(bookMapper::toBookCreateDTO)
-                .toList();
+        List<BookCreateDTO> bookCreateDTOList = bookService.findAllBooks(request).getContent();
+        ByteArrayResource resource = CSVReportGenerator.generateCSVReport(bookCreateDTOList);
+        String fileName = CSVReportGenerator.generateFileName();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .body(resource);
 
-        CSVReportGenerator csvReportGenerator = new CSVReportGenerator();
-        ByteArrayResource resource = csvReportGenerator.generateCSVReport(bookCreateDTOList);
-
-        if (resource != null) {
-            String fileName = "books_report.csv";
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
-                    .body(resource);
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @PostMapping(value = "/book/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

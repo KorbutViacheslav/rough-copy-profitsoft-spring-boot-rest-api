@@ -89,33 +89,12 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-/*    @Override
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
-    }
-
     @Override
-    public Page<Book> findAllBooks(String title, Integer yearPublish, Integer page, Integer size) {
-        Specification<Book> specification = (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new ArrayList<>();
-            if (title != null && !title.isEmpty()) {
-                predicates.add(criteriaBuilder.equal(root.get("title"), title));
-            }
-            if (yearPublish != null) {
-                predicates.add(criteriaBuilder.equal(root.get("yearPublished"), yearPublish));
-            }
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        };
-
-        Pageable pageable = PageRequest.of(page, size);
-        return bookRepository.findAll(specification, pageable);
-    }*/
-
-    @Override
-    public Page<Book> findAllBooks(BookFilterRequest bookFilterRequest) {
+    public Page<BookCreateDTO> findAllBooks(BookFilterRequest bookFilterRequest) {
         Specification<Book> specification = new BookSpecification(bookFilterRequest);
         Pageable pageable = PageRequest.of(bookFilterRequest.getPage(), bookFilterRequest.getSize());
-        return bookRepository.findAll(specification, pageable);
+        Page<Book> bookPage = bookRepository.findAll(specification, pageable);
+        return bookPage.map(bookMapper::toBookCreateDTO);
     }
 
     public Map<String, Object> uploadBooks(List<BookCreateDTO> bookCreateDTOs) {

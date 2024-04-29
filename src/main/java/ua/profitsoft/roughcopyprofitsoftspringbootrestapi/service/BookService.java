@@ -24,7 +24,7 @@ public interface BookService {
     //List<Book> getAllBooks();
 
     //Page<Book> findAllBooks(String title, Integer yearPublish,Integer page, Integer size);
-    Page<Book> findAllBooks(BookFilterRequest bookFilterRequest);
+    Page<BookCreateDTO> findAllBooks(BookFilterRequest bookFilterRequest);
 
     Map<String, Object> uploadBooks(List<BookCreateDTO> bookCreateDTOs);
 }
