@@ -9,11 +9,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.AuthorCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.BookCreateDTO;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read.BookReadDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.repository.AuthorRepository;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.repository.BookRepository;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.AuthorService;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.error.ResourceIsExistException;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.error.ResourceNotFoundException;
@@ -36,47 +39,39 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final AuthorService authorService;
     private final BookMapper bookMapper;
     private final AuthorMapper authorMapper;
     private final Validator validator;
 
     @Override
-    public Book createBook(Book book) {
-        try {
-            return bookRepository.save(book);
-        } catch (DataIntegrityViolationException ex) {
-            throw new ResourceIsExistException();
-        }
+    public BookReadDTO createBook(BookCreateDTO bookCreateDTO) {
+        Author author = getOrCreateAuthor(bookCreateDTO.getAuthor());
+        Book book = bookMapper.toBook(bookCreateDTO);
+        book.setAuthor(author);
+        Book savedBook = saveBook(book);
+        return bookMapper.toBookReadDTO(savedBook);
     }
 
     @Override
-    public Book getBookById(Integer id) {
+    public BookReadDTO getBookById(Integer id) {
         return bookRepository.findById(id)
+                .map(bookMapper::toBookReadDTO)
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
-    public Book updateBook(Integer id, Book book) {
-        Book existingBook = getBookById(id);
+    public BookReadDTO updateBook(Integer id, BookCreateDTO bookCreateDTO) {
+        Book existingBook = bookRepository.findById(id).get();
 
-        // Перевірка, чи було змінено автора
-        if (book.getAuthor() != null && !book.getAuthor().equals(existingBook.getAuthor())) {
-            // Перевірити, чи існує автор з таким іменем і прізвищем
-            Optional<Author> optionalAuthor = authorRepository.findByFirstNameAndLastName(book.getAuthor().getFirstName(), book.getAuthor().getLastName());
-            if (optionalAuthor.isPresent()) {
-                // Якщо автор вже існує, присвоїти його існуючій книзі
-                existingBook.setAuthor(optionalAuthor.get());
-            } else {
-                // Якщо автора не існує, зберегти нового автора
-                book.setAuthor(authorRepository.save(book.getAuthor()));
-            }
-        }
+        Author author = getOrCreateAuthor(bookCreateDTO.getAuthor());
+        existingBook.setAuthor(author);
+        existingBook.setTitle(bookCreateDTO.getTitle());
+        existingBook.setYearPublished(bookCreateDTO.getYearPublished());
+        existingBook.setGenres(new HashSet<>(bookCreateDTO.getGenres()));
 
-        existingBook.setTitle(book.getTitle());
-        existingBook.setYearPublished(book.getYearPublished());
-        existingBook.setGenres(book.getGenres());
-
-        return bookRepository.save(existingBook);
+        Book updatedBook = saveBook(existingBook);
+        return bookMapper.toBookReadDTO(updatedBook);
     }
 
     @Override
@@ -163,6 +158,24 @@ public class BookServiceImpl implements BookService {
             return true;
         }
         return false;
+    }
+
+    private Author getOrCreateAuthor(AuthorCreateDTO authorCreateDTO) {
+        try {
+            return authorService.createAuthor(authorMapper.toAuthor(authorCreateDTO));
+        } catch (ResourceIsExistException ex) {
+            return authorService.findByFirstNameAndLastName(
+                    authorCreateDTO.getFirstName(),
+                    authorCreateDTO.getLastName());
+        }
+    }
+
+    private Book saveBook(Book book) {
+        try {
+            return bookRepository.save(book);
+        } catch (DataIntegrityViolationException ex) {
+            throw new ResourceIsExistException();
+        }
     }
 
 }

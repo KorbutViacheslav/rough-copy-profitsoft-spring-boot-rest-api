@@ -2,6 +2,7 @@ package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service;
 
 import org.springframework.data.domain.Page;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.BookCreateDTO;
+import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read.BookReadDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Book;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.filter.BookFilterRequest;
 
@@ -13,11 +14,11 @@ import java.util.Map;
  * Date: 17.04.2024
  */
 public interface BookService {
-    Book createBook(Book book);
+    BookReadDTO createBook(BookCreateDTO book);
 
-    Book getBookById(Integer id);
+    BookReadDTO getBookById(Integer id);
 
-    Book updateBook(Integer id, Book book);
+    BookReadDTO updateBook(Integer id, BookCreateDTO bookCreateDTO);
 
     boolean deleteBookById(Integer id);
 

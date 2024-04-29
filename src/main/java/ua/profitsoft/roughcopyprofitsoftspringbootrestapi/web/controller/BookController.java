@@ -39,44 +39,27 @@ import java.util.Map;
 public class BookController {
 
     private final BookService bookService;
-    private final BookMapper bookMapper;
-    private final AuthorService authorService;
-    private final AuthorMapper authorMapper;
 
     @PostMapping("/book")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create new book", description = "Create new book to database.")
     public BookReadDTO createBook(@RequestBody @Valid BookCreateDTO bookCreateDTO) {
-        Author author = authorMapper.toAuthor(bookCreateDTO.getAuthor());
-        Book book = bookMapper.toBook(bookCreateDTO);
-
-        try {
-            authorService.createAuthor(author);
-        } catch (ResourceIsExistException ex) {
-            author = authorService.findByFirstNameAndLastName(
-                    bookCreateDTO.getAuthor().getFirstName(),
-                    bookCreateDTO.getAuthor().getLastName());
-        }
-        book.setAuthor(author);
-        bookService.createBook(book);
-        return bookMapper.toBookReadDTO(book);
+        return bookService.createBook(bookCreateDTO);
     }
 
     @GetMapping("/book/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get book by ID", description = "Get a book from the database by its unique ID.")
     public BookReadDTO getBookById(@PathVariable Integer id) {
-        Book book = bookService.getBookById(id);
-        return bookMapper.toBookReadDTO(book);
+        return bookService.getBookById(id);
+
     }
 
     @PatchMapping("/book/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update book by ID", description = "Update a book from the database by its unique ID.")
     public BookReadDTO updateBookById(@PathVariable Integer id, @RequestBody @Valid BookCreateDTO bookCreateDTO) {
-        Book b = bookMapper.toBook(bookCreateDTO);
-        Book bo = bookService.updateBook(id, b);
-        return bookMapper.toBookReadDTO(bo);
+        return bookService.updateBook(id, bookCreateDTO);
     }
 
     @DeleteMapping("/book/{id}")
