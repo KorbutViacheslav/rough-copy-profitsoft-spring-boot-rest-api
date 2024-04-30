@@ -94,17 +94,20 @@ public class BookServiceImpl implements BookService {
 
     public Map<String, Object> uploadBooks(List<BookCreateDTO> bookCreateDTOs) {
         Map<String, Object> response = new HashMap<>();
-        List<BookCreateDTO> successfullyImported = new ArrayList<>();
         List<String> failedToImport = new ArrayList<>();
+        int successfullyImported = 0;
+        int failedToImportCount = 0;
 
         for (BookCreateDTO bookCreateDTO : bookCreateDTOs) {
             try {
                 if (!isBookCreateDTOValid(bookCreateDTO, failedToImport)) {
+                    failedToImportCount++;
                     continue;
                 }
 
                 Author author = getAuthor(bookCreateDTO, failedToImport);
                 if (author == null) {
+                    failedToImportCount++;
                     continue;
                 }
 
@@ -112,19 +115,22 @@ public class BookServiceImpl implements BookService {
                 book.setAuthor(author);
 
                 if (isBookDuplicate(book, failedToImport)) {
+                    failedToImportCount++;
                     continue;
                 }
 
                 bookRepository.save(book);
-                successfullyImported.add(bookCreateDTO);
+                successfullyImported++;
             } catch (Exception e) {
                 String errorMessage = e.getMessage();
                 failedToImport.add("Failed to import book: " + bookCreateDTO.getTitle() + ". Reason: " + errorMessage);
+                failedToImportCount++;
             }
         }
 
-        response.put("successfullyImported", successfullyImported.size());
+        response.put("successfullyImported", successfullyImported);
         response.put("failedToImport", failedToImport);
+        response.put("failedToImportCount", failedToImportCount);
 
         return response;
     }

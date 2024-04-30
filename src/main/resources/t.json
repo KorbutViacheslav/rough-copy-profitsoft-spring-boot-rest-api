@@ -26,29 +26,27 @@
     ]
   },
   {
-    "title": "",
-    "yearPublished": 1986,
+    "title": "King Lear",
     "author": {
-      "firstName": "S",
-      "lastName": "K"
+      "firstName": "William",
+      "lastName": "Shakespeare"
     },
+    "yearPublished": 1606,
     "genres": [
-      "Horror",
-      "Thriller",
-      "Dark fantasy"
+      "Tragedy"
     ]
   },
   {
-    "title": "Hand",
-    "yearPublished": 2002,
+    "title": "A Midsummer Night's Dream",
     "author": {
-      "firstName": "Stephen",
-      "lastName": "King"
+      "firstName": "William",
+      "lastName": "Shakespeare"
     },
+    "yearPublished": 1595,
     "genres": [
-      "Roman",
-      "Thriller",
-      "Dark fantasy"
+      "Comedy",
+      "Fantasy"
     ]
   }
+
 ]

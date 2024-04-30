@@ -22,9 +22,6 @@ public interface BookService {
 
     boolean deleteBookById(Integer id);
 
-    //List<Book> getAllBooks();
-
-    //Page<Book> findAllBooks(String title, Integer yearPublish,Integer page, Integer size);
     Page<BookCreateDTO> findAllBooks(BookFilterRequest bookFilterRequest);
 
     Map<String, Object> uploadBooks(List<BookCreateDTO> bookCreateDTOs);
