@@ -66,9 +66,4 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.findByFirstNameAndLastName(firstName, lastName)
                 .orElseThrow(ResourceNotFoundException::new);
     }
-
-    @Override
-    public Page<Author> findAllAuthor() {
-        return null;
-    }
 }

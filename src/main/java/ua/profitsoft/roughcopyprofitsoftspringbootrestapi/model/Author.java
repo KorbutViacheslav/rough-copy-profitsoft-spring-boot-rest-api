@@ -21,6 +21,10 @@ import java.util.Set;
                 name = "unique_author_name",
                 columnList = "firstName, lastName", unique = true)})
 public class Author {
+    public Author(String firstName, String lastName){
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

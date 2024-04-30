@@ -24,5 +24,4 @@ public interface AuthorService {
 
     Author findByFirstNameAndLastName(String firstName, String lastName);
 
-    Page<Author> findAllAuthor();
 }

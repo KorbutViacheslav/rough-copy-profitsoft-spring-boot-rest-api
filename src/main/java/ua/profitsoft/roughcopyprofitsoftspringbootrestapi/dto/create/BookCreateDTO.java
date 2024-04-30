@@ -6,7 +6,9 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
@@ -18,6 +20,8 @@ import java.util.Set;
  */
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookCreateDTO {
     @Size(min = 1, max = 32, message = "Title must be between 1 and 32 characters long.")
     @NotNull

@@ -21,6 +21,13 @@ import java.util.Set;
         name = "unique_book_title_year",
         columnList = "title, yearPublished", unique = true)})
 public class Book {
+    public Book(String title, Author author, Integer yearPublished, Set<String> genres) {
+        this.title = title;
+        this.author = author;
+        this.yearPublished = yearPublished;
+        this.genres = genres;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -4,6 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.BookCreateDTO;
 
 import java.util.HashSet;
@@ -13,6 +16,9 @@ import java.util.Set;
  * Author: Viacheslav Korbut
  * Date: 22.04.2024
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class AuthorReadDTO {
 
     @Schema(description = "Author id", example = "1")

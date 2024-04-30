@@ -2,6 +2,9 @@ package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.AuthorCreateDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 
@@ -12,7 +15,11 @@ import java.util.Set;
  * Author: Viacheslav Korbut
  * Date: 17.04.2024
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class BookReadDTO {
+
     @Schema(description = "Id", example = "1")
     public Integer id;
 
