@@ -13,7 +13,7 @@ spring:
     # JPA properties
   jpa:
     hibernate:
-      ddl-auto: update # When you launch the application for the first time - switch "none" at "create"
+      ddl-auto: none # When you launch the application for the first time - switch "none" at "create"
     show-sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -25,7 +25,7 @@ spring:
 
   #Liquibase properties
   liquibase:
-    enabled: false
+    enabled: true
     change-log: classpath:db/changelog/changelog.yml
     default-schema: liquibase
 

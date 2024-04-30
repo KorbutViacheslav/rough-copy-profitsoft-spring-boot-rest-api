@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert_authors
+      author: Viacheslav Korbut
+      changes:
+        - sql: |
+            INSERT INTO author (first_name, last_name)
+            VALUES
+              ('William', 'Shakespeare'),
+              ('Jane', 'Austen'),
+              ('Leo', 'Tolstoy'),
+              ('George', 'Orwell'),
+              ('Ernest', 'Hemingway');

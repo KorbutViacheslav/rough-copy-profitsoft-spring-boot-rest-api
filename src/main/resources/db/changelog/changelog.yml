@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/V1__init.yml
+  - include:
+      file: db/changelog/V2__insert_authors.yml

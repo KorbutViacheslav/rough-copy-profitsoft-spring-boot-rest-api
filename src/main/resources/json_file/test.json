@@ -1,0 +1,71 @@
+[
+  {
+    "title": "Hamlet",
+    "yearPublished": 1603,
+    "author": {
+      "firstName": "William",
+      "lastName": "Shakespeare"
+    },
+    "genres": [
+      "Tragedy"
+    ]
+  },
+  {
+    "title": "Pride and Prejudice",
+    "yearPublished": 1813,
+    "author": {
+      "firstName": "Jane",
+      "lastName": "Austen"
+    },
+    "genres": [
+      "Romance",
+      "Comedy of manners"
+    ]
+  },
+  {
+    "title": "War and Peace",
+    "yearPublished": 1869,
+    "author": {
+      "firstName": "Leo",
+      "lastName": "Tolstoy"
+    },
+    "genres": [
+      "Historical fiction",
+      "Epic novel"
+    ]
+  },
+  {
+    "title": "1984",
+    "yearPublished": 1949,
+    "author": {
+      "firstName": "George",
+      "lastName": "Orwell"
+    },
+    "genres": [
+      "Dystopian",
+      "Political fiction"
+    ]
+  },
+  {
+    "title": "The Old Man and the Sea",
+    "yearPublished": 1952,
+    "author": {
+      "firstName": "Ernest",
+      "lastName": "Hemingway"
+    },
+    "genres": [
+      "Novella",
+      "Adventure fiction"
+    ]
+  },
+  {
+    "title": "Book Without Year",
+    "author": {
+      "firstName": "Unknown",
+      "lastName": "Author"
+    },
+    "genres": [
+      "Unknown Genre"
+    ]
+  }
+]
