@@ -8,6 +8,13 @@ import lombok.Data;
  * Author: Viacheslav Korbut
  * Date: 27.04.2024
  */
+
+/**
+ * This class represents a request used to filter books based on criteria such as title,
+ * year published, author's first name, author's last name, page number, and page size.
+ * Each attribute is annotated with the @Schema annotation to provide a description and
+ * example value for documentation purposes.
+ */
 @Builder
 @Data
 public class BookFilterRequest {

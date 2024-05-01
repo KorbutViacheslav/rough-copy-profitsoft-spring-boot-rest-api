@@ -17,12 +17,26 @@ import java.util.List;
  * Author: Viacheslav Korbut
  * Date: 28.04.2024
  */
+
+/**
+ * This utility class provides methods for generating CSV reports based on a list of book DTOs.
+ * The generateCSVReport method accepts a list of BookCreateDTO objects and generates a CSV report
+ * containing information about the books. The generateFileName method generates a unique filename
+ * for the CSV report based on the current date and time.
+ */
 public class CSVReportGenerator {
 
     private CSVReportGenerator() {
 
     }
 
+    /**
+     * Generates a CSV report based on the provided list of book DTOs.
+     *
+     * @param bookCreateDTOs The list of book DTOs to include in the report.
+     * @return A {@link ByteArrayResource} containing the generated CSV report.
+     * @throws CSVGenerationException If an error occurs during CSV generation.
+     */
     public static ByteArrayResource generateCSVReport(List<BookCreateDTO> bookCreateDTOs) {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
              OutputStreamWriter writer = new OutputStreamWriter(baos, StandardCharsets.UTF_8)) {
@@ -53,6 +67,11 @@ public class CSVReportGenerator {
         }
     }
 
+    /**
+     * Generates a unique filename for the CSV report based on the current date and time.
+     *
+     * @return A string representing the generated filename.
+     */
     public static String generateFileName() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
