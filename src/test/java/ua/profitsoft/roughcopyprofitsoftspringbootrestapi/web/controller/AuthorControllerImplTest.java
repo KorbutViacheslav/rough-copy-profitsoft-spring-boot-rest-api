@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = RoughCopyProfitsoftSpringBootRestApiApplication.class)
 @AutoConfigureMockMvc
-class AuthorControllerTest {
+class AuthorControllerImplTest {
 
     @Autowired
     private MockMvc mockMvc;
