@@ -20,14 +20,12 @@ import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.AuthorService;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.error.ResourceIsExistException;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.exeption.error.ResourceNotFoundException;
-
-import java.util.*;
-
-import jakarta.persistence.criteria.Predicate;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper.AuthorMapper;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper.BookMapper;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.filter.BookFilterRequest;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.filter.BookSpecification;
+
+import java.util.*;
 
 /**
  * Author: Viacheslav Korbut
@@ -44,6 +42,9 @@ public class BookServiceImpl implements BookService {
     private final AuthorMapper authorMapper;
     private final Validator validator;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BookReadDTO createBook(BookCreateDTO bookCreateDTO) {
         Author author = getOrCreateAuthor(bookCreateDTO.getAuthor());
@@ -53,6 +54,9 @@ public class BookServiceImpl implements BookService {
         return bookMapper.toBookReadDTO(savedBook);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BookReadDTO getBookById(Integer id) {
         return bookRepository.findById(id)
@@ -60,9 +64,13 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BookReadDTO updateBook(Integer id, BookCreateDTO bookCreateDTO) {
-        Book existingBook = bookRepository.findById(id).get();
+        Book existingBook = bookRepository.findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
 
         Author author = getOrCreateAuthor(bookCreateDTO.getAuthor());
         existingBook.setAuthor(author);
@@ -74,6 +82,9 @@ public class BookServiceImpl implements BookService {
         return bookMapper.toBookReadDTO(updatedBook);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean deleteBookById(Integer id) {
         if (bookRepository.existsById(id)) {
@@ -84,6 +95,9 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Page<BookCreateDTO> findAllBooks(BookFilterRequest bookFilterRequest) {
         Specification<Book> specification = new BookSpecification(bookFilterRequest);
@@ -92,6 +106,9 @@ public class BookServiceImpl implements BookService {
         return bookPage.map(bookMapper::toBookCreateDTO);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Map<String, Object> uploadBooks(List<BookCreateDTO> bookCreateDTOs) {
         Map<String, Object> response = new HashMap<>();
         List<String> failedToImport = new ArrayList<>();
@@ -135,6 +152,14 @@ public class BookServiceImpl implements BookService {
         return response;
     }
 
+    /**
+     * Validates the provided {@link BookCreateDTO} object.
+     * This method is used in {@link #uploadBooks(List)}.
+     *
+     * @param bookCreateDTO  The {@link BookCreateDTO} object to validate.
+     * @param failedToImport A list to collect error messages if validation fails.
+     * @return True if the {@link BookCreateDTO} is valid, otherwise false.
+     */
     private boolean isBookCreateDTOValid(BookCreateDTO bookCreateDTO, List<String> failedToImport) {
         Set<ConstraintViolation<BookCreateDTO>> violations = validator.validate(bookCreateDTO);
         if (!violations.isEmpty()) {
@@ -148,6 +173,14 @@ public class BookServiceImpl implements BookService {
         return true;
     }
 
+    /**
+     * Retrieves an existing author from the database or creates a new one if not found.
+     * This method is used in {@link #uploadBooks(List)} and {@link #createBook(BookCreateDTO)}.
+     *
+     * @param bookCreateDTO  The {@link BookCreateDTO} containing author information.
+     * @param failedToImport A list to collect error messages if author retrieval fails.
+     * @return The {@link Author} object found or created.
+     */
     private Author getAuthor(BookCreateDTO bookCreateDTO, List<String> failedToImport) {
         Author author = authorMapper.toAuthor(bookCreateDTO.getAuthor());
         Optional<Author> existingAuthor = authorRepository.findByFirstNameAndLastName(author.getFirstName(), author.getLastName());
@@ -158,6 +191,14 @@ public class BookServiceImpl implements BookService {
         return existingAuthor.get();
     }
 
+    /**
+     * Checks if a book with the same title and author already exists in the database.
+     * This method is used in {@link #uploadBooks(List)}.
+     *
+     * @param book           The {@link Book} object to check for duplicates.
+     * @param failedToImport A list to collect error messages if duplicate checking fails.
+     * @return True if a duplicate book is found, otherwise false.
+     */
     private boolean isBookDuplicate(Book book, List<String> failedToImport) {
         if (bookRepository.existsByTitleAndAuthor(book.getTitle(), book.getAuthor())) {
             failedToImport.add("Failed to import book: " + book.getTitle() + ". Reason: Duplicate book entry in the database.");
@@ -166,6 +207,14 @@ public class BookServiceImpl implements BookService {
         return false;
     }
 
+    /**
+     * Retrieves an existing author from the database or creates a new one if not found.
+     * This method is used in {@link #createBook(BookCreateDTO)}.
+     *
+     * @param authorCreateDTO The {@link AuthorCreateDTO} object containing author information.
+     * @return The {@link Author} object found or created.
+     * @throws ResourceIsExistException If the author already exists in the database.
+     */
     private Author getOrCreateAuthor(AuthorCreateDTO authorCreateDTO) {
         try {
             return authorService.createAuthor(authorMapper.toAuthor(authorCreateDTO));
@@ -176,6 +225,14 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    /**
+     * Saves the provided book to the database.
+     * This method is used in {@link #createBook(BookCreateDTO)} and {@link #updateBook(Integer, BookCreateDTO)}.
+     *
+     * @param book The {@link Book} object to save.
+     * @return The saved {@link Book} object.
+     * @throws ResourceIsExistException If the book already exists in the database.
+     */
     private Book saveBook(Book book) {
         try {
             return bookRepository.save(book);

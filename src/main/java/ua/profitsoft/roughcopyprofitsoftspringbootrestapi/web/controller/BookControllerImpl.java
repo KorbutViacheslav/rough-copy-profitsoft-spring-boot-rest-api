@@ -1,6 +1,5 @@
 package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
@@ -26,51 +25,73 @@ import java.util.Map;
  * Author: Viacheslav Korbut
  * Date: 17.04.2024
  */
+
+/**
+ * Implementation of the controller responsible for managing books.
+ */
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
-public class BookControllerImpl {
+public class BookControllerImpl implements BookController {
 
     private final BookService bookService;
 
+    /**
+     * {@inheritDoc}
+     */
     @PostMapping("/book")
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Create new book", description = "Create new book to database.")
+    @Override
     public BookReadDTO createBook(@RequestBody @Valid BookCreateDTO bookCreateDTO) {
         return bookService.createBook(bookCreateDTO);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @GetMapping("/book/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get book by ID", description = "Get a book from the database by its unique ID.")
+    @Override
     public BookReadDTO getBookById(@PathVariable Integer id) {
         return bookService.getBookById(id);
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @PatchMapping("/book/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Update book by ID", description = "Update a book from the database by its unique ID.")
+    @Override
     public BookReadDTO updateBookById(@PathVariable Integer id, @RequestBody @Valid BookCreateDTO bookCreateDTO) {
         return bookService.updateBook(id, bookCreateDTO);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @DeleteMapping("/book/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Delete book by ID", description = "Delete a book from the database by its unique ID.")
+    @Override
     public void deleteBookById(@PathVariable Integer id) {
         bookService.deleteBookById(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @PostMapping("/pageable")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get page books by filters", description = "Get page books by filters: title, year publish, author name, author last name. Get page and size. You make choose one or many filters.")
+    @Override
     public Page<BookCreateDTO> page(@RequestBody BookFilterRequest request) {
         return bookService.findAllBooks(request);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @PostMapping("/_report")
-    @Operation(summary = "Generate report for books", description = "Generate report in Excel or CSV format for books based on given filters")
+    @Override
     public ResponseEntity<Resource> generateReport(@RequestBody BookFilterRequest request) {
         List<BookCreateDTO> bookCreateDTOList = bookService.findAllBooks(request).getContent();
         ByteArrayResource resource = CSVReportGenerator.generateCSVReport(bookCreateDTOList);
@@ -81,8 +102,11 @@ public class BookControllerImpl {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @PostMapping(value = "/book/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Operation(summary = "Upload books from JSON file", description = "Upload books from JSON file and save valid entries to the database.")
+    @Override
     public ResponseEntity<Map<String, Object>> uploadBooks(@RequestPart("file") MultipartFile file) {
         List<BookCreateDTO> bookCreateDTOs = BookCreateJsonFileParser.parseJsonFile(file);
         Map<String, Object> response = bookService.uploadBooks(bookCreateDTOs);

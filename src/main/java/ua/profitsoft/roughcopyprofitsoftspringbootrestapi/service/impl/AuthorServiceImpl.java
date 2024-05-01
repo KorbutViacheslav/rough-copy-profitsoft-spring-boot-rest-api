@@ -2,7 +2,6 @@ package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.repository.AuthorRepository;
@@ -22,6 +21,9 @@ public class AuthorServiceImpl implements AuthorService {
 
     AuthorRepository authorRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Author createAuthor(Author author) {
         try {
@@ -31,12 +33,18 @@ public class AuthorServiceImpl implements AuthorService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Author getAuthorById(Integer id) {
         return authorRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Author updateAuthor(Integer id, Author author) {
         Author a = getAuthorById(id);
@@ -45,6 +53,9 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.save(a);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean deleteAuthorById(Integer id) {
         if (authorRepository.existsById(id)) {
@@ -56,11 +67,17 @@ public class AuthorServiceImpl implements AuthorService {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Author> getAllAuthor() {
         return authorRepository.findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Author findByFirstNameAndLastName(String firstName, String lastName) {
         return authorRepository.findByFirstNameAndLastName(firstName, lastName)
