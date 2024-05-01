@@ -15,6 +15,11 @@ import java.util.Set;
  * Author: Viacheslav Korbut
  * Date: 17.04.2024
  */
+
+/**
+ * Data Transfer Object (DTO) representing details of a book.
+ * Contains information about the book and its associated author.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

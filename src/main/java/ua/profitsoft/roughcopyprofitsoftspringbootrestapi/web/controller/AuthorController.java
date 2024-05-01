@@ -10,7 +10,6 @@ import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.create.AuthorCreat
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.dto.read.AuthorReadDTO;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.model.Author;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.AuthorService;
-import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.service.BookService;
 import ua.profitsoft.roughcopyprofitsoftspringbootrestapi.util.mapper.AuthorMapper;
 
 import java.util.List;
@@ -26,7 +25,6 @@ public class AuthorController {
 
     private final AuthorService authorService;
     private final AuthorMapper authorMapper;
-    private final BookService bookService;
 
     @PostMapping("/author")
     @ResponseStatus(HttpStatus.CREATED)

@@ -18,6 +18,11 @@ import java.util.Set;
  * Author: Viacheslav Korbut
  * Date: 24.04.2024
  */
+
+/**
+ * Data Transfer Object (DTO) for creating a new book.
+ * Represents the basic information required to create a book entity.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

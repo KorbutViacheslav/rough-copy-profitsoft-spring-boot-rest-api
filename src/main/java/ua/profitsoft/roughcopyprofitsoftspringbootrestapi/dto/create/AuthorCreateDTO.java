@@ -13,6 +13,11 @@ import lombok.Setter;
  * Author: Viacheslav Korbut
  * Date: 24.04.2024
  */
+
+/**
+ * Data Transfer Object (DTO) for creating a new author.
+ * Represents the basic information required to create an author entity.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

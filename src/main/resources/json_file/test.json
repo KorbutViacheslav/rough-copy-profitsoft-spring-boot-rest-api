@@ -61,6 +61,17 @@
   {
     "title": "Book Without Year",
     "author": {
+      "firstName": "Ernest",
+      "lastName": "Hemingway"
+    },
+    "genres": [
+      "Novella"
+    ]
+  },
+  {
+    "title": "Book With unknown author",
+    "yearPublished": 1952,
+    "author": {
       "firstName": "Unknown",
       "lastName": "Author"
     },
