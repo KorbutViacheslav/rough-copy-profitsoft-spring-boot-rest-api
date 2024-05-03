@@ -1,4 +1,4 @@
-package ua.profitsoft.roughcopyprofitsoftspringbootrestapi;
+package ua.profitsoft;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

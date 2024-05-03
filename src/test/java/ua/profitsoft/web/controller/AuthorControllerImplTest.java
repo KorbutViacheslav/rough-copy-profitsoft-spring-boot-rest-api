@@ -1,4 +1,4 @@
-package ua.profitsoft.roughcopyprofitsoftspringbootrestapi.web.controller;
+package ua.profitsoft.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;

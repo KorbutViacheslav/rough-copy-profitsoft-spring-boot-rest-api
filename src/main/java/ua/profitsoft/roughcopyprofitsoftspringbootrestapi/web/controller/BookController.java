@@ -100,6 +100,7 @@ public interface BookController {
      *
      * @param file The MultipartFile containing the JSON file.
      * @return A ResponseEntity containing a Map with the response data.
+     *
      */
     @Operation(summary = "Upload books from JSON file", description = "Upload books from JSON file and save valid entries to the database.")
     @ApiResponse(responseCode = "200", description = "Books uploaded successfully")
