@@ -104,6 +104,6 @@ public interface BookController {
      */
     @Operation(summary = "Upload books from JSON file", description = "Upload books from JSON file and save valid entries to the database.")
     @ApiResponse(responseCode = "200", description = "Books uploaded successfully")
-    //need corrected
+    //need correcte
     ResponseEntity<Map<String, Object>> uploadBooks(MultipartFile file);
 }
