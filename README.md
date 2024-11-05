@@ -49,3 +49,13 @@ Feel free to modify the content or structure according to your project's specifi
 $$ Margin = {SellingPriceWithoutVAT / ProductPriceWithoutVAT \over SellingPriceWithoutVAT} $$
 
 $$ Margin = {SellingPriceWithoutVAT - ProductPriceWithoutVAT \over SellingPriceWithoutVAT} *100 $$
+
+- Собівартість:
+    * [Собівартість інгрідієнтів] + [Виробничі витрати] + [Націнка] + [Маркетинг]
+
+$$ ProductPrice = IngredientsPrice  + ProductionCosts + Markups + MarketingMarkup $$
+
+- Маржинальність:
+    * [Рекомендована ціна(без ПДВ)] - [Собівартість(без ПДВ)] / [Рекомендована ціна] * [100]
+
+$$ Margin = {SellingPriceWithoutVAT - ProductPriceWithoutVAT \over SellingPriceWithoutVAT} *100 $$
