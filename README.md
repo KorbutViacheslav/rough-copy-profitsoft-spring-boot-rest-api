@@ -47,3 +47,5 @@ Feel free to modify the content or structure according to your project's specifi
   $$ ProductionCostsPerGram = {50(75) / 1000 \over 1000} $$
 
 $$ Margin = {SellingPriceWithoutVAT / ProductPriceWithoutVAT \over SellingPriceWithoutVAT} $$
+
+$$ Margin = {SellingPriceWithoutVAT - ProductPriceWithoutVAT \over SellingPriceWithoutVAT} *100 $$
