@@ -42,3 +42,5 @@ Provide a JSON file in the repository for data import, synchronized with the Liq
 Make sure to maintain consistency between the JSON file and the Liquibase script.
 
 Feel free to modify the content or structure according to your project's specific requirements.
+
+$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
