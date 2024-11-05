@@ -43,4 +43,8 @@ Make sure to maintain consistency between the JSON file and the Liquibase script
 
 Feel free to modify the content or structure according to your project's specific requirements.
 
-$$ ProductionCostsPerGram = {50(75) / 1000 \over 1000} $$
+  [Собівартість інгрідієнтів] + [Виробничі витрати] + [Націнка] + [Маркетинг]
+  $$ ProductPrice = IngredientsPrice  + ProductionCosts + Markups + MarketingMarkup $$
+- Маржинальність:
+    * [Рекомендована ціна(без ПДВ)] - [Собівартість(без ПДВ)] / [Рекомендована ціна] * [100]
+    * $$ Margin = {SellingPriceWithoutVAT - ProductPriceWithoutVAT \over SellingPriceWithoutVAT} * 100 $$
