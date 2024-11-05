@@ -43,4 +43,4 @@ Make sure to maintain consistency between the JSON file and the Liquibase script
 
 Feel free to modify the content or structure according to your project's specific requirements.
 
-$$ ProductionCostsPerGram = {50(75) \ / \ 1000 \over 1000} $$
+$$ ProductionCostsPerGram = {{50(75) \over 1000} \over 1000} $$
